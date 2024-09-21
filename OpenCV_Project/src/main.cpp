@@ -6,7 +6,6 @@
 using namespace cv;
 using namespace std;
 
-
 int main()
 {
 //展示原始图片
@@ -79,13 +78,30 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
     //imshow("Contours", contour_image);
 
 //寻找红色区域的bounding box（包含这些红色区域的最小矩形）
+    Mat boundingBox_image = Mat::zeros(src.size(), CV_8UC3);
+    for (size_t i = 0; i < contours.size(); i++) {
+        Rect bounding_rect = boundingRect(contours[i]);
+        rectangle(boundingBox_image, bounding_rect, Scalar(0, 255, 0), 2);
+    }
 
+    // 显示包含 bounding box 的图像
+    //imshow("Green bounding boxes", boundingBox_image);
 
-
-
-
-
-
+//计算轮廓面积（对于太短的孤立轮廓线则过滤掉）
+    Mat size_image = Mat::zeros(src.size(), CV_8UC3);
+        for (size_t i = 0; i < contours.size(); i++) {
+            // 绘制轮廓
+            drawContours(size_image, contours, (int)i, Scalar(0, 255, 0), 2);
+            // 计算面积
+            double area = contourArea(contours[i]);
+            // 过滤掉孤立的线段
+            if (arcLength(contours[i], true) > 10 && area > 10) {
+                cout << "Contour " << i << " area: " << area << endl;
+            } else {
+                continue; //太小的就不显示
+            }
+        }
+        
  waitKey(0);
  return 0;
 }
