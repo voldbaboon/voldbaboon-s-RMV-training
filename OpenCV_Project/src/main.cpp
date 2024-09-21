@@ -3,15 +3,63 @@
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/opencv.hpp>
 #include <vector>
+#include <string>
 using namespace cv;
 using namespace std;
+
+class ImageDisplay {
+public:
+    void displayImages(const vector<Mat>& images, int numImagesPerRow, const string& name) {
+        int numImages = images.size();
+        if (numImages % numImagesPerRow != 0) {
+            cout << "除不尽" << endl;
+            return;
+        }
+
+        Mat combinedImage;
+        vector<Mat> rows;
+
+        // 计算目标尺寸，使用第一张图像的尺寸
+        Size targetSize = images[0].size();
+
+        for (int i = 0; i < numImages; i += numImagesPerRow) {
+            vector<Mat> currentRow(images.begin() + i, images.begin() + i + numImagesPerRow);
+            convertToThreeChannels(currentRow); // 确保所有图像都是3通道
+            resizeImages(currentRow, targetSize); // 确保所有图像都缩放到相同尺寸
+            Mat rowImage;
+            hconcat(currentRow, rowImage);//把currentrow横向连起来，返回给rowImage
+            rows.push_back(rowImage);
+        }
+
+        vconcat(rows, combinedImage);
+        imshow(name, combinedImage);
+        waitKey(0);
+    }
+
+private:
+    void resizeImages(vector<Mat>& images, const Size& targetSize) {
+        for (auto& image : images) { //范围基 for 循环（range-based for loop），用于遍历容器中的元素
+            resize(image, image, targetSize); // 将每张图像缩放到目标尺寸
+        }
+    }
+
+    void convertToThreeChannels(vector<Mat>& images) {
+        for (auto& image : images) {
+            if (image.channels() == 1) {
+                cvtColor(image, image, COLOR_GRAY2BGR); // 将1通道图像转换为3通道
+            }
+        }
+    }
+};
+
 
 int main()
 {
 //展示原始图片
 Mat src = imread("/home/baboon/voldbaboon-s-RMV-training/OpenCV_Project/resources/test_image.png");
+resize(src, src, Size(340,480));
 imshow("initial_image", src);
-  
+/* 
 //灰度图
 Mat grey_image;
 cvtColor(src,grey_image,COLOR_BGR2GRAY);
@@ -66,13 +114,13 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
     // 查找轮廓
     vector<vector<Point>> contours;
     vector<Vec4i> hierarchy;
-    findContours(binary, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    findContours(binary, contours, hierarchy, RETR_TREE, CHAIN_APPROX_SIMPLE); //RETR_TREE是所有轮廓
     // 创建一个与原图同大小的图像用于绘制轮廓
     Mat contour_image = Mat::zeros(src.size(), CV_8UC3);  //CV_8UC3是一种图像数据类型，8U代表0～255,C3代表3个通道
     // 绘制轮廓
     for (size_t i = 0; i < contours.size(); i++) {//i用来遍历所有轮廓（包含在contours向量里）
         //int i 代表第几个， 2代表粗细
-        drawContours(contour_image, contours, (int)i, Scalar(0, 255, 0), 2); // 绿色轮廓
+        drawContours(contour_image, contours, -1, Scalar(0, 255, 0), 2); // 绿色轮廓
     }
     // 显示带有轮廓的图像
     //imshow("Contours", contour_image);
@@ -101,7 +149,117 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
                 continue; //太小的就不显示
             }
         }
-        
+
+//提取高亮区域
+Mat hsv_hl = hsv_image, hl_image;
+Scalar hl_low = Scalar (0, 0, 200);
+Scalar hl_high = Scalar (180, 255, 255);
+Mat mask_hl;
+inRange(hsv_hl, hl_low, hl_high, mask_hl);
+bitwise_and(src, src, hl_image, mask_hl);
+//imshow("hl_image", hl_image);
+
+//高亮区域图形学处理
+    //灰度化
+    cvtColor(hl_image, hl_image, COLOR_BGR2GRAY);
+    //imshow("hl_image", hl_image);
+    //二值化
+    threshold(hl_image, hl_image, 10, 255, THRESH_BINARY); // 二值化
+    //膨胀
+    // 定义腐蚀和膨胀的核（结构元素）
+	Mat kernel = getStructuringElement(MORPH_RECT, Size(3, 3));
+	dilate(hl_image, hl_image, kernel); 
+    // 腐蚀
+	erode(hl_image, hl_image, kernel);
+	//漫水
+    cvtColor(hl_image, hl_image, COLOR_GRAY2BGR);
+    Point seedpoint (1700,2300);
+    Scalar newcolor = (0, 0, 255);
+    floodFill(hl_image, seedpoint, newcolor);
+    imshow("hl_image", hl_image);
+*/
+//图像绘制
+    //绘制
+    Mat draw_image = Mat::zeros(src.size(), CV_8UC3);
+    // 绘制圆形
+    cv::Point center(200, 200); // 圆心
+    int radius = 50; // 半径
+    cv::Scalar circleColor(0, 255, 0); // 绿色
+    cv::circle(draw_image, center, radius, circleColor, -1); // -1 表示填充圆形
+
+    // 绘制矩形
+    cv::Point topLeft(50, 50); // 矩形的左上角
+    cv::Point bottomRight(150, 150); // 矩形的右下角
+    cv::Scalar rectangleColor(255, 0, 0); // 蓝色
+    cv::rectangle(draw_image, topLeft, bottomRight, rectangleColor, -1); // -1 表示填充矩形
+
+    // 绘制数字 "2"
+    cv::Point textOrg(200, 300); // 文本的起始位置
+    cv::Scalar textColor(0, 0, 255); 
+    int fontFace = cv::FONT_HERSHEY_SIMPLEX; // 字体类型
+    double fontScale = 2; // 字体大小
+    int thickness = 2; // 字体线宽
+    cv::putText(draw_image, "2", textOrg, fontFace, fontScale, textColor, thickness);
+
+    //绘制红色外轮廓
+    Mat drawGray_image;
+    cvtColor(draw_image, drawGray_image, COLOR_BGR2GRAY); // 转换为灰度图像
+    // 二值化
+    Mat draw_binary;
+    threshold(drawGray_image, draw_binary, 10, 255, THRESH_BINARY); // 二值化
+    // 查找轮廓
+    vector<vector<Point>> draw_contours;
+    vector<Vec4i> draw_hierarchy;
+    findContours(draw_binary, draw_contours, draw_hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    // 创建一个与原图同大小的图像用于绘制轮廓
+    Mat drawContour_image = Mat::zeros(src.size(), CV_8UC3);  //CV_8UC3是一种图像数据类型，8U代表0～255,C3代表3个通道
+    // 绘制轮廓
+    for (size_t i = 0; i < draw_contours.size(); i++) {//i用来遍历所有轮廓（包含在contours向量里）
+        drawContours(drawContour_image, draw_contours, -1, Scalar(0, 0, 255), 2); //红色轮廓
+    }
+    //imshow("drawContour_image", drawContour_image);
+
+    //绘制红色bounding box
+    Mat drawBoundingBox_image = Mat::zeros(src.size(), CV_8UC3);
+    for (size_t i = 0; i < draw_contours.size(); i++) {
+        Rect bounding_rect = boundingRect(draw_contours[i]);
+        rectangle(drawBoundingBox_image, bounding_rect, Scalar(0, 0, 255), 2);
+    }
+    imshow("drawBoundingBox_image", drawBoundingBox_image);
+
+//图像本身处理
+    //旋转35度
+    // 获取图像的中心点
+    cv::Point2f rotated_center(src.cols / 2.0, src.rows / 2.0);
+    // 计算旋转矩阵
+    double angle = 35.0; // 旋转角度
+    double scale = 1.0;  // 缩放因子
+    cv::Mat rotation_matrix = cv::getRotationMatrix2D(rotated_center, angle, scale);
+    // 计算旋转后的图像大小
+    cv::Rect2f bbox = cv::RotatedRect(rotated_center, src.size(), angle).boundingRect2f();
+    // 调整旋转矩阵以考虑平移
+    rotation_matrix.at<double>(0, 2) += bbox.width / 2.0 - center.x;
+    rotation_matrix.at<double>(1, 2) += bbox.height / 2.0 - center.y;
+    // 旋转图像
+    cv::Mat rotated_image;
+    cv::warpAffine(src, rotated_image, rotation_matrix, bbox.size());
+    imshow("rotated_image", rotated_image);
+
+    //裁剪为左上1/4
+    int new_width = src.cols / 2;
+    int new_height = src.rows / 2;
+
+    // 定义感兴趣区域（ROI）
+    Rect roi(0, 0, new_width, new_height);
+
+    // 裁剪图像
+    Mat cropped_image = src(roi);
+    imshow("cropped_image", cropped_image);
+/*ImageDisplay imageDisplayer;
+vector<Mat> images = {src, grey_image, hsv_image, MF_image, Gaussian_image, red_image, contour_image, boundingBox_image};      
+
+imageDisplayer.displayImages(images, 4, "combined window");
+*/
  waitKey(0);
  return 0;
 }
