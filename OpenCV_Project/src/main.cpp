@@ -1,7 +1,8 @@
 #include <iostream>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
-
+#include <opencv2/opencv.hpp>
+#include <vector>
 using namespace cv;
 using namespace std;
 
@@ -33,9 +34,9 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
 //imshow("Gaussian_image", Gaussian_image);
 
 //HSV方法提取红色区域
-// 转换颜色空间为HSV（已做）
+    // 转换颜色空间为HSV（已做）
     Mat hsv1 = hsv_image, hsv2 = hsv_image;
-    // 设定红色阈值范围（可以根据实际需求进行调整）
+    // 设定红色阈值范围
     Scalar lower_red1 = Scalar(0, 100, 100);
     Scalar upper_red1 = Scalar(10, 255, 255);
 
