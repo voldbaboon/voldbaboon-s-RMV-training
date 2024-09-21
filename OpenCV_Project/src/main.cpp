@@ -55,7 +55,35 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
     
     // 显示提取后的红色像素图像
     red_image = red_image1 + red_image2;
-    cv::imshow("Red Image", red_image);
+    //imshow("Red Image", red_image);
+//绘制轮廓
+    // 转换为灰度图像
+    Mat gray_image;
+    cvtColor(red_image, gray_image, COLOR_BGR2GRAY); // 转换为灰度图像
+    // 二值化
+    Mat binary;
+    threshold(gray_image, binary, 10, 255, THRESH_BINARY); // 二值化
+    // 查找轮廓
+    vector<vector<Point>> contours;
+    vector<Vec4i> hierarchy;
+    findContours(binary, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);
+    // 创建一个与原图同大小的图像用于绘制轮廓
+    Mat contour_image = Mat::zeros(src.size(), CV_8UC3);  //CV_8UC3是一种图像数据类型，8U代表0～255,C3代表3个通道
+    // 绘制轮廓
+    for (size_t i = 0; i < contours.size(); i++) {//i用来遍历所有轮廓（包含在contours向量里）
+        //int i 代表第几个， 2代表粗细
+        drawContours(contour_image, contours, (int)i, Scalar(0, 255, 0), 2); // 绿色轮廓
+    }
+    // 显示带有轮廓的图像
+    //imshow("Contours", contour_image);
+
+//寻找红色区域的bounding box（包含这些红色区域的最小矩形）
+
+
+
+
+
+
 
  waitKey(0);
  return 0;
