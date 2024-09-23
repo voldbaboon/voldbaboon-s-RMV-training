@@ -103,7 +103,7 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
     
     // 显示提取后的红色像素图像
     red_image = red_image1 + red_image2;
-    //imshow("Red Image", red_image);
+
 //绘制轮廓
     // 转换为灰度图像
     Mat gray_image;
@@ -173,11 +173,10 @@ bitwise_and(src, src, hl_image, mask_hl);
 	erode(hl_image, hl_image, kernel);
 	//漫水
     cvtColor(hl_image, hl_image, COLOR_GRAY2BGR);
-    Point seedpoint (1700,2300);
+    Point seedpoint (339, 447);
     Scalar newcolor = (0, 0, 255);
     floodFill(hl_image, seedpoint, newcolor);
-    imshow("hl_image", hl_image);
-*/
+
 //图像绘制
     //绘制
     Mat draw_image = Mat::zeros(src.size(), CV_8UC3);
@@ -248,15 +247,24 @@ bitwise_and(src, src, hl_image, mask_hl);
     //裁剪为左上1/4
     int new_width = src.cols / 2;
     int new_height = src.rows / 2;
-
-    // 定义感兴趣区域（ROI）
+    // 定义区域（ROI）
     Rect roi(0, 0, new_width, new_height);
 
     // 裁剪图像
     Mat cropped_image = src(roi);
-    imshow("cropped_image", cropped_image);
-/*ImageDisplay imageDisplayer;
-vector<Mat> images = {src, grey_image, hsv_image, MF_image, Gaussian_image, red_image, contour_image, boundingBox_image};      
+
+//展示图像
+ImageDisplay imageDisplayer;
+vector<Mat> images_task1 = {src, grey_image, hsv_image};      
+vector<Mat> images_task2 = {MF_image, Gaussian_image};
+vector<Mat> images_task3 = {red_image, contour_image, boundingBox_image, hl_image};
+vector<Mat> images_task4 = {draw_image, drawContour_image, drawBoundingBox_image};
+vector<Mat> images_task5 = {rotated_image, cropped_image};
+imageDisplayer.displayImages(images_task1, 3, "图像颜色空间转换");
+imageDisplayer.displayImages(images_task2, 2, "应用各种滤波操作");
+imageDisplayer.displayImages(images_task3, 2, "特征提取");
+imageDisplayer.displayImages(images_task4, 3, "图像绘制");
+imageDisplayer.displayImages(images_task5, 2, "图像处理");
 
 imageDisplayer.displayImages(images, 4, "combined window");
 */
