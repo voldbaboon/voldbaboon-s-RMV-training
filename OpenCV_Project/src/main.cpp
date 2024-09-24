@@ -215,19 +215,19 @@ bitwise_and(src, src, hl_image, mask_hl);
 //图像本身处理
     //旋转35度
     // 获取图像的中心点
-    cv::Point2f rotated_center(src.cols / 2.0, src.rows / 2.0);
+    Point2f rotated_center(src.cols / 2.0, src.rows / 2.0);
     // 计算旋转矩阵
     double angle = 35.0; // 旋转角度
     double scale = 1.0;  // 缩放因子
-    cv::Mat rotation_matrix = cv::getRotationMatrix2D(rotated_center, angle, scale);
+    Mat rotation_matrix = getRotationMatrix2D(rotated_center, angle, scale);
     // 计算旋转后的图像大小
-    cv::Rect2f bbox = cv::RotatedRect(rotated_center, src.size(), angle).boundingRect2f();
+    Rect2f bbox = RotatedRect(rotated_center, src.size(), angle).boundingRect2f();
     // 调整旋转矩阵以考虑平移
     rotation_matrix.at<double>(0, 2) += bbox.width / 2.0 - center.x;
     rotation_matrix.at<double>(1, 2) += bbox.height / 2.0 - center.y;
     // 旋转图像
-    cv::Mat rotated_image;
-    cv::warpAffine(src, rotated_image, rotation_matrix, bbox.size());
+    Mat rotated_image;
+    warpAffine(src, rotated_image, rotation_matrix, bbox.size());
 
     //裁剪为左上1/4
     int new_width = src.cols / 2;
