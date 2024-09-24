@@ -11,8 +11,9 @@
 - 需要注意HSV空间中红色有两个阈值范围
 ```CPP
 Scalar lower_red1 = Scalar(0, 100, 100);
-    Scalar upper_red1 = Scalar(10, 255, 255);
+Scalar upper_red1 = Scalar(10, 255, 255);
 
-    Scalar lower_red2 = Scalar(156, 100, 100);
-    Scalar upper_red2 = Scalar(180, 255, 255);
+Scalar lower_red2 = Scalar(156, 100, 100);
+Scalar upper_red2 = Scalar(180, 255, 255);
 ```
+- 使用
