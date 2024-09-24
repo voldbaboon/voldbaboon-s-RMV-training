@@ -1,7 +1,0 @@
-[
-{
-  "directory": "/home/baboon/voldbaboon-s-RMV-training/OpenCV_Project/build",
-  "command": "/usr/bin/c++  -isystem /usr/local/include/opencv4 -g -o CMakeFiles/OpenCV_Project.dir/src/main.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/OpenCV_Project/src/main.cpp",
-  "file": "/home/baboon/voldbaboon-s-RMV-training/OpenCV_Project/src/main.cpp"
-}
-]
