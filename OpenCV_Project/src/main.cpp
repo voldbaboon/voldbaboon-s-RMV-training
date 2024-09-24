@@ -33,7 +33,6 @@ public:
 
         vconcat(rows, combinedImage);
         imshow(name, combinedImage);
-        waitKey(0);
     }
 
 private:
@@ -58,27 +57,21 @@ int main()
 //展示原始图片
 Mat src = imread("/home/baboon/voldbaboon-s-RMV-training/OpenCV_Project/resources/test_image.png");
 resize(src, src, Size(340,480));
-imshow("initial_image", src);
-/* 
 //灰度图
 Mat grey_image;
 cvtColor(src,grey_image,COLOR_BGR2GRAY);
-//imshow("grey_image", grey_image);
 
 //HSV(H:色调 S：饱和度 V：明度)
 Mat hsv_image;
 cvtColor(src, hsv_image, COLOR_BGR2HSV);
-//imshow("hsv_image", hsv_image);
 
 //均值滤波
 Mat MF_image;
 blur(src, MF_image, Size(5,5)); 
-//imshow("MF_image", MF_image);
 
 //高斯滤波
 Mat Gaussian_image;
 GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
-//imshow("Gaussian_image", Gaussian_image);
 
 //HSV方法提取红色区域
     // 转换颜色空间为HSV（已做）
@@ -122,8 +115,6 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
         //int i 代表第几个， 2代表粗细
         drawContours(contour_image, contours, -1, Scalar(0, 255, 0), 2); // 绿色轮廓
     }
-    // 显示带有轮廓的图像
-    //imshow("Contours", contour_image);
 
 //寻找红色区域的bounding box（包含这些红色区域的最小矩形）
     Mat boundingBox_image = Mat::zeros(src.size(), CV_8UC3);
@@ -132,8 +123,6 @@ GaussianBlur(src, Gaussian_image, Size(7,7), 2, 2);
         rectangle(boundingBox_image, bounding_rect, Scalar(0, 255, 0), 2);
     }
 
-    // 显示包含 bounding box 的图像
-    //imshow("Green bounding boxes", boundingBox_image);
 
 //计算轮廓面积（对于太短的孤立轮廓线则过滤掉）
     Mat size_image = Mat::zeros(src.size(), CV_8UC3);
@@ -157,7 +146,6 @@ Scalar hl_high = Scalar (180, 255, 255);
 Mat mask_hl;
 inRange(hsv_hl, hl_low, hl_high, mask_hl);
 bitwise_and(src, src, hl_image, mask_hl);
-//imshow("hl_image", hl_image);
 
 //高亮区域图形学处理
     //灰度化
@@ -216,7 +204,6 @@ bitwise_and(src, src, hl_image, mask_hl);
     for (size_t i = 0; i < draw_contours.size(); i++) {//i用来遍历所有轮廓（包含在contours向量里）
         drawContours(drawContour_image, draw_contours, -1, Scalar(0, 0, 255), 2); //红色轮廓
     }
-    //imshow("drawContour_image", drawContour_image);
 
     //绘制红色bounding box
     Mat drawBoundingBox_image = Mat::zeros(src.size(), CV_8UC3);
@@ -224,7 +211,6 @@ bitwise_and(src, src, hl_image, mask_hl);
         Rect bounding_rect = boundingRect(draw_contours[i]);
         rectangle(drawBoundingBox_image, bounding_rect, Scalar(0, 0, 255), 2);
     }
-    imshow("drawBoundingBox_image", drawBoundingBox_image);
 
 //图像本身处理
     //旋转35度
@@ -242,14 +228,12 @@ bitwise_and(src, src, hl_image, mask_hl);
     // 旋转图像
     cv::Mat rotated_image;
     cv::warpAffine(src, rotated_image, rotation_matrix, bbox.size());
-    imshow("rotated_image", rotated_image);
 
     //裁剪为左上1/4
     int new_width = src.cols / 2;
     int new_height = src.rows / 2;
     // 定义区域（ROI）
     Rect roi(0, 0, new_width, new_height);
-
     // 裁剪图像
     Mat cropped_image = src(roi);
 
@@ -266,8 +250,6 @@ imageDisplayer.displayImages(images_task3, 2, "特征提取");
 imageDisplayer.displayImages(images_task4, 3, "图像绘制");
 imageDisplayer.displayImages(images_task5, 2, "图像处理");
 
-imageDisplayer.displayImages(images, 4, "combined window");
-*/
  waitKey(0);
  return 0;
 }
