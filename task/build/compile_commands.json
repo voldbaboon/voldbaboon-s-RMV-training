@@ -1,0 +1,12 @@
+[
+{
+  "directory": "/home/baboon/voldbaboon-s-RMV-training/task/build",
+  "command": "/usr/bin/c++  -I/home/baboon/voldbaboon-s-RMV-training/task/include -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/main.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/main.cpp",
+  "file": "/home/baboon/voldbaboon-s-RMV-training/task/main.cpp"
+},
+{
+  "directory": "/home/baboon/voldbaboon-s-RMV-training/task/build",
+  "command": "/usr/bin/c++  -I/home/baboon/voldbaboon-s-RMV-training/task/include -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/src/windmill.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/src/windmill.cpp",
+  "file": "/home/baboon/voldbaboon-s-RMV-training/task/src/windmill.cpp"
+}
+]

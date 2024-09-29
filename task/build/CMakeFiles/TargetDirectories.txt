@@ -1,0 +1,3 @@
+/home/baboon/voldbaboon-s-RMV-training/task/build/CMakeFiles/task.dir
+/home/baboon/voldbaboon-s-RMV-training/task/build/CMakeFiles/edit_cache.dir
+/home/baboon/voldbaboon-s-RMV-training/task/build/CMakeFiles/rebuild_cache.dir
