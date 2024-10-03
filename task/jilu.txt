@@ -1,0 +1,36 @@
+        t = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::system_clock::now().time_since_epoch());
+        src = wm.getMat((double)t.count()/1000);
+        //==========================代码区========================//
+        //识别程序
+        cv::Mat grey_image, binary;
+        cv::cvtColor(src, grey_image, COLOR_BGR2GRAY);
+        threshold(grey_image, binary, 10 ,255, THRESH_BINARY);
+        vector<vector<Point>> contours;
+        vector<Point> R_contour, Hammer_contour;
+        vector<Vec4i> hierarchy;
+        findContours(binary, contours, hierarchy, RETR_EXTERNAL, CHAIN_APPROX_SIMPLE);    
+        std::sort(contours.begin(), contours.end(), compareContourAreas);//按面积从小到大排列，最小的是R，其次是锤子
+        //画R的中心
+        if (contours[0].size() > 0){
+            Rect bounding_rect = boundingRect(contours[0]);
+            R_Center = cv::Point2i(bounding_rect.x + bounding_rect.width / 2, bounding_rect.y + bounding_rect.height / 2);
+            cv::circle(src, R_Center, 8, Scalar(0, 255, 0), 1);
+        }
+        //画锤子的中心
+        if (contours[1].size() > 0) {
+            Rect bounding_rect = boundingRect(contours[1]);
+            cv::Mat tempFind = binary(bounding_rect);
+            vector<vector<Point>> tempFindContours;
+            vector<Vec4i> tempFindHierarchy;
+            findContours(tempFind, tempFindContours, tempFindHierarchy, RETR_CCOMP, CHAIN_APPROX_SIMPLE);
+            for (int j = 0; j < tempFindContours.size(); j++) {
+                if (tempFindHierarchy[j][3] != -1) { // 内部轮廓
+                    Rect bounding_findbox = boundingRect(tempFindContours[j]);
+                    bounding_findbox.x += bounding_rect.x;
+                    bounding_findbox.y += bounding_rect.y;
+
+                    boxCenter = cv::Point2i(bounding_findbox.x + bounding_findbox.width / 2, bounding_findbox.y + bounding_findbox.height / 2);
+                    cv::circle(src, boxCenter, 8, Scalar(0, 255, 0), 1);
+                }
+            }
+        }

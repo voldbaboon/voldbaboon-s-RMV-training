@@ -1,12 +1,12 @@
 [
 {
   "directory": "/home/baboon/voldbaboon-s-RMV-training/task/build",
-  "command": "/usr/bin/c++  -I/home/baboon/voldbaboon-s-RMV-training/task/include -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/main.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/main.cpp",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGOOGLE_GLOG_DLL_DECL=\"\" -DGOOGLE_GLOG_DLL_DECL_FOR_UNITTESTS=\"\" -I/home/baboon/ceres-solver/include -I/home/baboon/voldbaboon-s-RMV-training/task/include -I/usr/include/eigen3 -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/main.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/main.cpp",
   "file": "/home/baboon/voldbaboon-s-RMV-training/task/main.cpp"
 },
 {
   "directory": "/home/baboon/voldbaboon-s-RMV-training/task/build",
-  "command": "/usr/bin/c++  -I/home/baboon/voldbaboon-s-RMV-training/task/include -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/src/windmill.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/src/windmill.cpp",
+  "command": "/usr/bin/c++ -DGFLAGS_IS_A_DLL=0 -DGOOGLE_GLOG_DLL_DECL=\"\" -DGOOGLE_GLOG_DLL_DECL_FOR_UNITTESTS=\"\" -I/home/baboon/ceres-solver/include -I/home/baboon/voldbaboon-s-RMV-training/task/include -I/usr/include/eigen3 -isystem /usr/local/include/opencv4 -g -std=gnu++11 -o CMakeFiles/task.dir/src/windmill.cpp.o -c /home/baboon/voldbaboon-s-RMV-training/task/src/windmill.cpp",
   "file": "/home/baboon/voldbaboon-s-RMV-training/task/src/windmill.cpp"
 }
 ]

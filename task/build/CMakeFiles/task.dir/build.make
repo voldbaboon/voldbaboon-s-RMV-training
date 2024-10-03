@@ -116,6 +116,7 @@ task: /usr/local/lib/libopencv_photo.so.4.6.0
 task: /usr/local/lib/libopencv_stitching.so.4.6.0
 task: /usr/local/lib/libopencv_video.so.4.6.0
 task: /usr/local/lib/libopencv_videoio.so.4.6.0
+task: /usr/local/lib/libceres.a
 task: /usr/local/lib/libopencv_imgcodecs.so.4.6.0
 task: /usr/local/lib/libopencv_dnn.so.4.6.0
 task: /usr/local/lib/libopencv_calib3d.so.4.6.0
@@ -123,6 +124,35 @@ task: /usr/local/lib/libopencv_features2d.so.4.6.0
 task: /usr/local/lib/libopencv_flann.so.4.6.0
 task: /usr/local/lib/libopencv_imgproc.so.4.6.0
 task: /usr/local/lib/libopencv_core.so.4.6.0
+task: /usr/lib/x86_64-linux-gnu/libglog.so.0.4.0
+task: /usr/lib/x86_64-linux-gnu/libunwind.so
+task: /usr/lib/x86_64-linux-gnu/libgflags.so.2.2.2
+task: /usr/lib/x86_64-linux-gnu/libgflags.so.2.2.2
+task: /usr/lib/x86_64-linux-gnu/libspqr.so
+task: /usr/local/lib/libtbbmalloc.so
+task: /usr/local/lib/libtbb.so
+task: /usr/lib/x86_64-linux-gnu/libcholmod.so
+task: /usr/lib/x86_64-linux-gnu/libccolamd.so
+task: /usr/lib/x86_64-linux-gnu/libcamd.so
+task: /usr/lib/x86_64-linux-gnu/libcolamd.so
+task: /usr/lib/x86_64-linux-gnu/libamd.so
+task: /usr/lib/x86_64-linux-gnu/libopenblas.so
+task: /usr/lib/x86_64-linux-gnu/libsuitesparseconfig.so
+task: /usr/lib/x86_64-linux-gnu/librt.a
+task: /usr/lib/x86_64-linux-gnu/libmetis.so
+task: /usr/lib/x86_64-linux-gnu/libcxsparse.so
+task: /usr/local/lib/libtbbmalloc.so
+task: /usr/local/lib/libtbb.so
+task: /usr/lib/x86_64-linux-gnu/libcholmod.so
+task: /usr/lib/x86_64-linux-gnu/libccolamd.so
+task: /usr/lib/x86_64-linux-gnu/libcamd.so
+task: /usr/lib/x86_64-linux-gnu/libcolamd.so
+task: /usr/lib/x86_64-linux-gnu/libamd.so
+task: /usr/lib/x86_64-linux-gnu/libopenblas.so
+task: /usr/lib/x86_64-linux-gnu/libsuitesparseconfig.so
+task: /usr/lib/x86_64-linux-gnu/librt.a
+task: /usr/lib/x86_64-linux-gnu/libmetis.so
+task: /usr/lib/x86_64-linux-gnu/libcxsparse.so
 task: CMakeFiles/task.dir/link.txt
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/baboon/voldbaboon-s-RMV-training/task/build/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Linking CXX executable task"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/task.dir/link.txt --verbose=$(VERBOSE)

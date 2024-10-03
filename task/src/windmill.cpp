@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 
+
 namespace WINDMILL
 {
     WindMill::WindMill(double time)

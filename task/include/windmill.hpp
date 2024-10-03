@@ -24,10 +24,12 @@ namespace WINDMILL
         void drawR(cv::Mat &img, const cv::Point2i &center);
         void drawHitFan(cv::Mat &img, const cv::Point2i &center, double angle);
         void drawOtherFan(cv::Mat &img, const cv::Point2i &center, double angle);
+        //calPoint:center+(r*cosθ+r*sinθ）：风车叶片点
         cv::Point calPoint(const cv::Point2f &center, double angle_deg, double r)
         {
             return center + cv::Point2f((float)cos(angle_deg / 180 * 3.1415926), (float)-sin(angle_deg / 180 * 3.1415926)) * r;
         }
+
         double SumAngle(double angle_now, double t0, double dt)
         {
             double dangle = A0 * dt + (A / w) * (cos(w * t0 + 1.81) - cos(w * (t0 + dt) + 1.81));
