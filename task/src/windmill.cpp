@@ -11,7 +11,7 @@ namespace WINDMILL
         start_time = time;
         A = 0.785;
         w = 1.884;
-        fai = 1.65; // what's the function of "fai"? the value of fai is wrong.
+        fai = 0.24; // what's the function of "fai"? the value of fai is wrong.
         A0 = 1.305;
         now_angle = 0.0;
         std::srand((unsigned)std::time(NULL));
@@ -77,7 +77,7 @@ namespace WINDMILL
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::default_random_engine gen(seed);
         std::normal_distribution<double> noise(0, 0.2);
-        now_angle = SumAngle(0.0, 0.0, (now_time - start_time) / 1000) + noise(gen); // it is more reasonal to devide 1000 here.
+        now_angle = SumAngle(0.0, 0.0, (now_time - start_time)) + noise(gen); // it is more reasonal to devide 1000 here.
         drawR(windmill, R_center);
         drawHitFan(windmill, R_center, now_angle);
         for (int i = 1; i < 5; i++)

@@ -6,6 +6,7 @@
 #include <opencv2/highgui.hpp>
 #include <chrono>
 #include <random>
+#include <iostream>
 
 namespace WINDMILL
 {
@@ -32,7 +33,10 @@ namespace WINDMILL
         {
             double dangle = A0 * dt + (A / w) * (cos(w * t0 + 1.81) - cos(w * (t0 + dt) + 1.81));
             angle_now += dangle / 3.1415926 * 180;
-            // what's the aim of these two if? there is no need to. if you want to limmit angle_now in range of (0,360), this is not the correct way.
+            angle_now = fmod(angle_now, 360.0);
+            if (angle_now < 0) {
+                angle_now += 360.0;
+            }
             return angle_now;
         }
 
