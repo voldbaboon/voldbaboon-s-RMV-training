@@ -33,10 +33,6 @@ namespace WINDMILL
         {
             double dangle = A0 * dt + (A / w) * (cos(w * t0 + 1.81) - cos(w * (t0 + dt) + 1.81));
             angle_now += dangle / 3.1415926 * 180;
-            angle_now = fmod(angle_now, 360.0);
-            if (angle_now < 0) {
-                angle_now += 360.0;
-            }
             return angle_now;
         }
 
